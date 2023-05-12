@@ -39,6 +39,7 @@ resource "aws_launch_template" "launch_template" {
   name_prefix   = "${var.env}-${var.component}-launch_template"
   image_id      = data.aws_ami.ami_id.id
   instance_type = var.instance_type
+  vpc_security_group_ids = [aws_security_group.main.id]
 }
 
 resource "aws_autoscaling_group" "auto_scaling_group" {
