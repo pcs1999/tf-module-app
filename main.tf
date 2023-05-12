@@ -25,6 +25,40 @@ resource "aws_iam_instance_profile" "para_instance_profile" {
   name = "${var.env}-${var.component}-role"
 }
 
+resource "aws_iam_policy" "aws_parameter_policy" {
+  name        = "${var.env}-${var.component}-parameter_store_role"
+  path        = "/"
+  description = "${var.env}-${var.component}-parameter_store_role"
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "VisualEditor0",
+        "Effect": "Allow",
+        "Action": [
+          "ssm:GetParameterHistory",
+          "ssm:GetParametersByPath",
+          "ssm:GetParameters",
+          "ssm:GetParameter"
+        ],
+        "Resource": "arn:aws:ssm:us-east-1:490686900756:parameter/${var.env}.${var.component}"
+      },
+      {
+        "Sid": "VisualEditor1",
+        "Effect": "Allow",
+        "Action": "ssm:DescribeParameters",
+        "Resource": "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "policy-attach" {
+  role       = aws_iam_role.aws_role.name
+  policy_arn = aws_iam_policy.aws_parameter_policy.arn
+}
+
 
 resource "aws_security_group" "main" {
   name        = "${var.env}-${var.component}_security_group"
@@ -67,6 +101,9 @@ resource "aws_launch_template" "launch_template" {
   image_id      = data.aws_ami.ami_id.id
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
+  iam_instance_profile {
+    arn = aws_iam_instance_profile.para_instance_profile.arn
+  }
 }
 
 resource "aws_autoscaling_group" "auto_scaling_group" {
