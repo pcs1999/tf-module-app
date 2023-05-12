@@ -107,10 +107,16 @@ resource "aws_launch_template" "launch_template" {
   image_id               = data.aws_ami.ami_id.id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
+  user_data = base64encode(templatefile("${path.module}/user_data.sh",{component=var.component,env=var.env} ))
+
   iam_instance_profile {
     arn = aws_iam_instance_profile.para_instance_profile.arn
   }
-  user_data = base64encode(templatefile("${path.module}/user_data.sh",{component=var.component,env=var.env} ))
+
+  instance_market_options {
+    market_type = "spot"
+
+  }
 }
 
 resource "aws_autoscaling_group" "auto_scaling_group" {
@@ -118,8 +124,6 @@ resource "aws_autoscaling_group" "auto_scaling_group" {
   max_size                  = var.max_size
   min_size                  = var.min_size
   desired_capacity          = var.desired_capacity
-
-
   force_delete              = true
   vpc_zone_identifier       = var.subnet_ids
 
