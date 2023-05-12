@@ -1,3 +1,4 @@
+// creating the aws_iam_role
 resource "aws_iam_role" "aws_role" {
   name = "${var.env}-${var.component}-role"
 
@@ -99,6 +100,8 @@ resource "aws_security_group" "main" {
 
 }
 
+
+
 resource "aws_launch_template" "launch_template" {
   name_prefix   = "${var.env}-${var.component}-launch_template"
   image_id      = data.aws_ami.ami_id.id
@@ -107,6 +110,7 @@ resource "aws_launch_template" "launch_template" {
   iam_instance_profile {
     arn = aws_iam_instance_profile.para_instance_profile.arn
   }
+  user_data = base64encode(templatefile("${path.module}/user_data.sh",{component=var.component,env=var.env} ))
 }
 
 #resource "aws_autoscaling_group" "auto_scaling_group" {
