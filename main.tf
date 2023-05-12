@@ -4,14 +4,14 @@ resource "aws_iam_role" "aws_role" {
 
 
   assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
+    Version          = "2012-10-17"
+    Statement        = [
       {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Sid    = ""
-        Principal = {
-          Service = "ec2.amazonaws.com"
+        Action       = "sts:AssumeRole"
+        Effect       = "Allow"
+        Sid          = ""
+        Principal    = {
+          Service    = "ec2.amazonaws.com"
         }
       },
     ]
@@ -103,9 +103,9 @@ resource "aws_security_group" "main" {
 
 
 resource "aws_launch_template" "launch_template" {
-  name_prefix   = "${var.env}-${var.component}-launch_template"
-  image_id      = data.aws_ami.ami_id.id
-  instance_type = var.instance_type
+  name                   = "${var.env}-${var.component}-launch_template"
+  image_id               = data.aws_ami.ami_id.id
+  instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
   iam_instance_profile {
     arn = aws_iam_instance_profile.para_instance_profile.arn
@@ -129,10 +129,10 @@ resource "aws_autoscaling_group" "auto_scaling_group" {
   }
 
   dynamic "tag" {
-    for_each = local.all_tags
+    for_each              = local.all_tags
     content {
-      key = tag.value.key
-      value = tag.value.value
+      key                 = tag.value.key
+      value               = tag.value.value
       propagate_at_launch = true
     }
   }
