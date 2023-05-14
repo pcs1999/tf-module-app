@@ -134,6 +134,7 @@ resource "aws_autoscaling_group" "auto_scaling_group" {
   desired_capacity          = var.desired_capacity
   force_delete              = true
   vpc_zone_identifier       = var.subnet_ids
+  target_group_arns = [aws_lb_target_group.target_group.arn]
 
   launch_template {
     id = aws_launch_template.launch_template.id
