@@ -150,3 +150,12 @@ resource "aws_autoscaling_group" "auto_scaling_group" {
   }
 
 }
+
+
+resource "aws_route53_record" "alb_DNS_record" {
+  zone_id = "Z09063921V1VGRMXUB88J"
+  name    = "${var.component}-${var.env}.chandupcs.online"
+  type    = "CNAME"
+  ttl     = 30
+  records = [var.alb]
+}
