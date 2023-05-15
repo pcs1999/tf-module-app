@@ -115,7 +115,7 @@ resource "aws_launch_template" "launch_template" {
   image_id               = data.aws_ami.ami_id.id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
-  user_data = base64encode(templatefile("${path.module}/user_data.sh",{component=var.component,env=var.env} ))
+  user_data = base64encode(templatefile("${path.module}/user_data.sh",{ component= var.component, env= var.env }))
 
   iam_instance_profile {
     arn = aws_iam_instance_profile.para_instance_profile.arn
