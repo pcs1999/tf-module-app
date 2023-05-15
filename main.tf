@@ -178,7 +178,7 @@ resource "aws_lb_target_group" "target_group" {
   }
 }
 
-
+//below listener for backend components
 resource "aws_lb_listener_rule" "backend_listener_ruke" {
   count = var.listener_priority != 0 ? 1 : 0
   listener_arn = var.listener
@@ -198,7 +198,7 @@ resource "aws_lb_listener_rule" "backend_listener_ruke" {
 
 // below listener is only for frontend public thing
 
-resource "aws_lb_listener" "backend_app_listeners" {
+resource "aws_lb_listener" "frontend_app_listener" {
   count = var.listener_priority == 0 ? 1 : 0
   load_balancer_arn = var.alb_arn
   port              = "80"
