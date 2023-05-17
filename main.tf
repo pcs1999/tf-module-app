@@ -50,8 +50,7 @@ resource "aws_iam_policy" "aws_parameter_policy" {
           "arn:aws:ssm:us-east-1:490686900756:parameter/${var.env}.elastic**",
           "arn:aws:ssm:us-east-1:490686900756:parameter/${var.env}.rds*",
           "arn:aws:ssm:us-east-1:490686900756:parameter/${var.env}.rabbitmq*",
-
-
+          "arn:aws:ssm:us-east-1:490686900756:parameter/grafana*"
 
 
         ]
