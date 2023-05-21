@@ -162,6 +162,18 @@ resource "aws_autoscaling_group" "auto_scaling_group" {
 
 }
 
+resource "aws_autoscaling_policy" "cpu-tracking-policy" {
+  name        = "whenCPULoadIncrease"
+  policy_type = "TargetTrackingScaling"
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+    target_value = 30.0
+  }
+  autoscaling_group_name = aws_autoscaling_group.auto_scaling_group.name
+}
+
 
 resource "aws_route53_record" "alb_DNS_record" {
   zone_id = "Z09063921V1VGRMXUB88J"
