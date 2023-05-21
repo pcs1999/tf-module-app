@@ -106,7 +106,7 @@ resource "aws_security_group" "main" {
   }
 
   ingress {
-    description      = "prometheus"
+    description      = "ELK"
     from_port        = 5044
     to_port          = 5044
     protocol         = "tcp"
