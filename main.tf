@@ -105,14 +105,6 @@ resource "aws_security_group" "main" {
 
   }
 
-  ingress {
-    description      = "ELK"
-    from_port        = 5044
-    to_port          = 5044
-    protocol         = "tcp"
-    cidr_blocks      = var.elk_cidr
-
-  }
 
   egress {
     from_port        = 0
