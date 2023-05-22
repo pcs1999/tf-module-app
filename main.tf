@@ -198,6 +198,7 @@ resource "aws_lb_target_group" "target_group" {
     timeout = 2
 
   }
+  deregistration_delay = "10"
 }
 
 //below listener for backend components
