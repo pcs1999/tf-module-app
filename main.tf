@@ -131,10 +131,10 @@ resource "aws_launch_template" "launch_template" {
     arn = aws_iam_instance_profile.para_instance_profile.arn
   }
 
-  instance_market_options {
-    market_type = "spot"
-
-  }
+#  instance_market_options {
+#    market_type = "spot"
+#
+#  }
 }
 
 resource "aws_autoscaling_group" "auto_scaling_group" {
