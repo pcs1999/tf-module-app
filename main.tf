@@ -176,7 +176,7 @@ resource "aws_autoscaling_policy" "cpu-tracking-policy" {
 
 
 resource "aws_route53_record" "alb_DNS_record" {
-  zone_id = "Z09063921V1VGRMXUB88J"
+  zone_id = "Z04623222IZKOJZ0BZ3PB"
   name    = "${var.component}-${var.env}.chandupcs.online"
   type    = "CNAME"
   ttl     = 30
@@ -227,7 +227,7 @@ resource "aws_lb_listener" "frontend_app_listener" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = "arn:aws:acm:us-east-1:490686900756:certificate/a17b8c0b-b0df-4a0a-abb5-8256457f809f"
+  certificate_arn   = "arn:aws:acm:us-east-1:261454514620:certificate/b5ff1caa-1d2a-4922-8567-cea866b137bc"
 
   default_action {
     type = "forward"
